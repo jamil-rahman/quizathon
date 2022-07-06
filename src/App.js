@@ -9,7 +9,8 @@ import Quiz from "./views/QuizPage/Quiz";
 
 function App() {
   // const [score, setScore] = useState(0);
-  const { score, addScore, decreaseScore } = useContext(ScoreContext);
+  // const { score, addScore, decreaseScore } = useContext(ScoreContext);
+  
   return (
     <Router>
       <div className={styles.app}>
