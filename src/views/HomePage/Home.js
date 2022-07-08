@@ -24,9 +24,9 @@ export default function Home() {
   }
 
   return (
-    <div className={styles.home}>
+    <div className={styles.home_container}>
       <p>{randomName}, are you ready?</p>
-      <span onClick={handleStart}>START!</span>
+      <span className={styles.start_btn} onClick={handleStart}>START!</span>
     </div>
   );
 }
