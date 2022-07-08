@@ -24,3 +24,25 @@
     margin-top: 30px;
     text-align: end;
 }
+
+@media (max-width: 614px) {
+  .quiz_header p{
+    font-size: 12px;
+  }
+  .score_card{
+    display: flex;
+    justify-content: center;
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 800px) {
+  .quiz_header p{
+    font-size: 20px;
+  }
+
+  .score_card{
+    font-size: 12px;
+  }
+
+}

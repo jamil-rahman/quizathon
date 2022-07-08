@@ -3,32 +3,57 @@ import Error from "../Error/Error";
 import styles from "./Question.module.css";
 import classNames from "classnames";
 import ScoreContext from "../../ScoreContext";
+import { useNavigate } from "react-router-dom";
+//import { Button } from "@mui/material";
 
 export default function Question({
   currentQuestion,
   questions,
   choices,
-  correct,
+  correctAnswer,
+  setCurrentQuestion,
 }) {
   const [selected, setSelected] = useState();
   const [error, setError] = useState(false);
   const { setScore, score } = useContext(ScoreContext);
 
+  let navigate = useNavigate();
+
   const handleChoice = (choice) => {
     //if choice is correct
-    if (selected === choice && selected === correct) return styles.correct;
+    if (selected === choice && selected === correctAnswer)
+      return styles.correct;
     //if choice is incorrect
-    else if (selected === choice && selected !== correct)
+    else if (selected === choice && selected !== correctAnswer)
       return styles.incorrect;
     //if incorrect choice is chosen and show the correct one
-    else if (choice === correct) return styles.correct;
+    else if (choice === correctAnswer) return styles.correct;
   };
 
   const handleMarking = (choice) => {
     setSelected(choice);
-    if (choice === correct) setScore(score + 2);
-    setError(false);
+    if (choice === correctAnswer) setScore(score + 1);
+    
+    if (currentQuestion > 8) {
+      navigate("/result");
+    } else {
+      setTimeout(() => {
+        setCurrentQuestion(currentQuestion + 1);
+        setSelected();
+      }, 1500);
+      
+    }
+
   };
+
+  const handleSkip = () =>{
+    if (currentQuestion > 8) {
+      navigate("/result");
+    } else {
+      setCurrentQuestion(currentQuestion + 1);
+      setSelected();
+    } 
+  }
 
   return (
     <div className={styles.question_container}>
@@ -44,7 +69,7 @@ export default function Question({
           {choices &&
             choices.map((choice) => (
               <button
-                onClick={() => {}}
+                onClick={() => handleMarking(choice)}
                 className={classNames(
                   styles.choice,
                   selected && handleChoice(choice)
@@ -55,6 +80,15 @@ export default function Question({
                 {choice}
               </button>
             ))}
+        </div>
+
+        <div className={styles.buttons_container}>
+          {/* <div className={styles.buttons}>
+            <button className={styles.button}>Previous</button>
+            <button className={styles.button}>Next</button>
+          </div> */}
+          <button className={styles.submit_btn}>Submit</button>
+          <span className={styles.skip} onClick={handleSkip}>Skip this question</span>
         </div>
       </div>
     </div>

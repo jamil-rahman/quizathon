@@ -1,5 +1,3 @@
-import { useContext } from "react";
-import ScoreContext from "./ScoreContext";
 import styles from "./App.module.css";
 import Header from "./components/Header/Header";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
