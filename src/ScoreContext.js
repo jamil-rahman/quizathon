@@ -1,27 +1,23 @@
 import React, { createContext, useEffect, useState } from "react";
+import useLocalStorage from "./Custom Hooks/useLocalStorage";
 const ScoreContext = createContext();
 
 export const ScoreProvider = ({ children }) => {
   const [score, setScore] = useState(0);
   const [userName, setUserName] = useState(null);
   const [questions, setQuestions] = useState();
-  // const [userStats, setUserStats] = useState({
-  //   username: "",
-  //   score: null
-  // })
-  // const addScore = () => setScore(score + 1);
-  // const decreaseScore = () => setScore(score - 10);
+  const [scoreArray, setScoreArray] = useLocalStorage("Score_Array", []);
 
   const saveNameInLocalStorage = (name) => {
     localStorage.setItem("Name", name);
     setUserName(name);
   };
 
-  useEffect(()=>{
-    const name = localStorage.getItem('Name');
-    setUserName(name)
+  useEffect(() => {
+    const name = localStorage.getItem("Name");
+    setUserName(name);
     fetchQuestions();
-  },[])
+  }, []);
 
   const fetchQuestions = async () => {
     const res = await fetch(
@@ -31,6 +27,11 @@ export const ScoreProvider = ({ children }) => {
     setQuestions(data.results);
     //Setting my questions State
   };
+  const saveScoreInLocalStorage = (score) => {
+    setScoreArray((prevScores) => {
+      return [...prevScores, JSON.stringify(score)];
+    });
+  };
 
   return (
     <ScoreContext.Provider
@@ -38,9 +39,10 @@ export const ScoreProvider = ({ children }) => {
         score,
         setScore,
         saveNameInLocalStorage,
-        userName, 
+        userName,
         questions,
-        setQuestions
+        setQuestions,
+        saveScoreInLocalStorage,
       }}
     >
       {children}

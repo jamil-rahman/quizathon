@@ -58,8 +58,6 @@ export default function Quiz() {
         questions={questions}
         choices={choices}
         correctAnswer={questions[currentQuestion]?.correct_answer}
-        // score={score}
-        // setScore={setScore}
         setQuestions={setQuestions} />
 
       </>

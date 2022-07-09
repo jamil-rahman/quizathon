@@ -1,10 +1,9 @@
 import { useContext, useState } from "react";
-import Error from "../Error/Error";
+// import Error from "../Error/Error";
 import styles from "./Question.module.css";
 import classNames from "classnames";
 import ScoreContext from "../../ScoreContext";
 import { useNavigate } from "react-router-dom";
-//import { Button } from "@mui/material";
 
 export default function Question({
   currentQuestion,
@@ -12,10 +11,11 @@ export default function Question({
   choices,
   correctAnswer,
   setCurrentQuestion,
+  setQuestions
 }) {
   const [selected, setSelected] = useState();
-  const [error, setError] = useState(false);
-  const { setScore, score } = useContext(ScoreContext);
+  // const [error, setError] = useState(false);
+  const { setScore, score, saveScoreInLocalStorage } = useContext(ScoreContext);
 
   let navigate = useNavigate();
 
@@ -55,6 +55,15 @@ export default function Question({
     } 
   }
 
+  const handleSubmit = () => {
+    setCurrentQuestion(0)
+    setQuestions()
+    saveScoreInLocalStorage(score)
+
+
+    navigate('/result')
+  }
+
   return (
     <div className={styles.question_container}>
       <span className={styles.question_header}>
@@ -65,7 +74,8 @@ export default function Question({
         <h3>{questions[currentQuestion].question}</h3>
 
         <div className={styles.choices_container}>
-          {error && <Error>{error}</Error>}
+          {/* For showing any error to users */}
+          {/* {error && <Error>{error}</Error>} */}
           {choices &&
             choices.map((choice) => (
               <button
@@ -87,7 +97,7 @@ export default function Question({
             <button className={styles.button}>Previous</button>
             <button className={styles.button}>Next</button>
           </div> */}
-          <button className={styles.submit_btn}>Submit</button>
+          <button className={styles.submit_btn} onClick={handleSubmit}>Submit</button>
           <span className={styles.skip} onClick={handleSkip}>Skip this question</span>
         </div>
       </div>
