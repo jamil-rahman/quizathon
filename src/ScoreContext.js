@@ -43,6 +43,7 @@ export const ScoreProvider = ({ children }) => {
         questions,
         setQuestions,
         saveScoreInLocalStorage,
+        scoreArray
       }}
     >
       {children}
