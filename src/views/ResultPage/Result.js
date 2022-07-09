@@ -25,7 +25,7 @@ export default function Result() {
         {score > 1 ? `points!` : `point`}
       </p>
       <button className={styles.btn} onClick={() => navigate("/quiz")}>
-        <i class="fa fa-undo" aria-hidden="true"></i>
+        <i className="fa fa-undo" aria-hidden="true"></i>
         <span>Try Again</span>
       </button>
 
