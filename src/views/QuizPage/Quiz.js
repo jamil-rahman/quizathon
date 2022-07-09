@@ -24,7 +24,7 @@ export default function Quiz() {
   //the API in an infinite loop even with dependency provided
   //the idea is to fetch the question once in a component that will
   //mount once. Hence, the fetching is done from my Score Context, instead
-  //of in this Component. Keeping the above code for reference that it does 
+  //of in this Component. Keeping the above code for reference that it does
   //not work :)
 
   useEffect(() => {
@@ -36,8 +36,8 @@ export default function Quiz() {
           ...questions[currentQuestion]?.incorrect_answers,
         ])
     );
-       //console.log(questions);
-  }, [questions,currentQuestion]);
+    //console.log(questions);
+  }, [questions, currentQuestion]);
 
   const shuffleQuestions = (choices) => {
     return choices.sort(() => Math.random() - 0.5);
@@ -48,20 +48,22 @@ export default function Quiz() {
       <div className={styles.quiz_header}>
         <p>Hey {userName}, answer as much as you can!</p>
       </div>
-      {questions ?
-      <>
-      <div className={styles.score_card}>Score: {score}/10 </div>
-      
-        <Question
-        currentQuestion={currentQuestion}
-        setCurrentQuestion={setCurrentQuestion}
-        questions={questions}
-        choices={choices}
-        correctAnswer={questions[currentQuestion]?.correct_answer}
-        setQuestions={setQuestions} />
+      {questions ? (
+        <>
+          <div className={styles.score_card}>Score: {score} </div>
 
-      </>
-       : <LoadingSpinner />}
+          <Question
+            currentQuestion={currentQuestion}
+            setCurrentQuestion={setCurrentQuestion}
+            questions={questions}
+            choices={choices}
+            correctAnswer={questions[currentQuestion]?.correct_answer}
+            setQuestions={setQuestions}
+          />
+        </>
+      ) : (
+        <LoadingSpinner />
+      )}
     </div>
   );
 }

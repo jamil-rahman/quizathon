@@ -6,9 +6,6 @@ import Result from "./views/ResultPage/Result";
 import Quiz from "./views/QuizPage/Quiz";
 
 function App() {
-  // const [score, setScore] = useState(0);
-  // const { score, addScore, decreaseScore } = useContext(ScoreContext);
-  
   return (
     <Router>
       <div className={styles.app}>
@@ -18,9 +15,6 @@ function App() {
           <Route exact path="/quiz" element={<Quiz />} />
           <Route exact path="/result" element={<Result />} />
         </Routes>
-        {/* <p>Score {score}</p>
-      <span onClick={addScore}>Increase by one</span>
-      <span onClick={decreaseScore}>Decrease by 10</span> */}
       </div>
     </Router>
   );

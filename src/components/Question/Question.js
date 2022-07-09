@@ -11,7 +11,7 @@ export default function Question({
   choices,
   correctAnswer,
   setCurrentQuestion,
-  setQuestions
+  setQuestions,
 }) {
   const [selected, setSelected] = useState();
   // const [error, setError] = useState(false);
@@ -33,36 +33,42 @@ export default function Question({
   const handleMarking = (choice) => {
     setSelected(choice);
     if (choice === correctAnswer) setScore(score + 1);
-    
+
     if (currentQuestion > 8) {
-      navigate("/result");
+      saveScoreInLocalStorage(score);
+      setTimeout(() => {
+        navigate("/result");
+      }, 1500);
     } else {
       setTimeout(() => {
         setCurrentQuestion(currentQuestion + 1);
         setSelected();
       }, 1500);
-      
     }
-
   };
 
-  const handleSkip = () =>{
+  const handleSkip = () => {
     if (currentQuestion > 8) {
       navigate("/result");
     } else {
       setCurrentQuestion(currentQuestion + 1);
       setSelected();
-    } 
-  }
+    }
+  };
 
   const handleSubmit = () => {
-    setCurrentQuestion(0)
-    setQuestions()
-    saveScoreInLocalStorage(score)
+    setCurrentQuestion(0);
+    setQuestions();
+    saveScoreInLocalStorage(score);
+    navigate("/result");
+  };
 
-
-    navigate('/result')
-  }
+  const handlePrevious = () => {
+    //takes me to previous question
+    setCurrentQuestion(currentQuestion - 1);
+    setSelected();
+    setScore(score - 1);
+  };
 
   return (
     <div className={styles.question_container}>
@@ -97,8 +103,26 @@ export default function Question({
             <button className={styles.button}>Previous</button>
             <button className={styles.button}>Next</button>
           </div> */}
-          <button className={styles.submit_btn} onClick={handleSubmit}>Submit</button>
-          <span className={styles.skip} onClick={handleSkip}>Skip this question</span>
+          <button className={styles.submit_btn} onClick={handleSubmit}>
+            Submit
+          </button>
+          <span className={styles.skip} onClick={handleSkip}>
+            Skip this question
+          </span>
+          {currentQuestion > 0 ? (
+            <div>
+              <span
+                className={styles.previous}
+                style={{ marginTop: "20px" }}
+                onClick={handlePrevious}
+              >
+                Previous Question
+              </span>
+              <span className={styles.warning}>
+                (Warning: Going back deducts a point from your current score!)
+              </span>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

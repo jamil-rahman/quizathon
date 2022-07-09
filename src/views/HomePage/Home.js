@@ -7,26 +7,30 @@ import styles from "./Home.module.css";
 export default function Home() {
   const randomName = faker.name.firstName();
   let navigate = useNavigate();
-  const {saveNameInLocalStorage} = useContext(ScoreContext)
-  
-  useEffect(()=>{
-    document.addEventListener('keydown',handleKeyDown, true)
-  })
+  const { saveNameInLocalStorage } = useContext(ScoreContext);
 
-  const handleKeyDown = (e) => {                                                       
-    e.key==="Enter"? navigate("/quiz",{replace: true}):  console.log("Enter not pressed")
-    saveNameInLocalStorage(randomName);
-  }
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown, true);
+  });
 
-  const handleStart = () =>{
+  const handleKeyDown = (e) => {
+    e.key === "Enter"
+      ? navigate("/quiz", { replace: true })
+      : console.log("Enter not pressed");
     saveNameInLocalStorage(randomName);
-    navigate('/quiz');
-  }
+  };
+
+  const handleStart = () => {
+    saveNameInLocalStorage(randomName);
+    navigate("/quiz");
+  };
 
   return (
     <div className={styles.home_container}>
       <p>{randomName}, are you ready?</p>
-      <span className={styles.start_btn} onClick={handleStart}>START!</span>
+      <span className={styles.start_btn} onClick={handleStart}>
+        START!
+      </span>
     </div>
   );
 }
